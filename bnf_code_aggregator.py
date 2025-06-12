@@ -56,10 +56,10 @@ if uploaded_file and codelist_df is not None:
 
     # === Custom cost multipliers ===
     cost_multipliers = {
-        "Triple Inhalers": 2,
-        "Lidocaine": 3,
-        "Bath Emollients": 4,
-        "Gluten Free": 10,
+        "Triple Inhalers": 36.41,
+        "Lidocaine": 70.99,
+        "Bath Emollients": 7.28,
+        "Gluten Free": 20.55,
     }
 
     # === Function to aggregate by category ===
