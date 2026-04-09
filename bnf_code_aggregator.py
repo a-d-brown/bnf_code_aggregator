@@ -2,7 +2,6 @@ import pandas as pd
 import streamlit as st
 
 st.set_page_config(layout="wide")
-
 st.title("BNF Code Aggregator")
 
 # === File uploaders ===
@@ -15,7 +14,9 @@ with col1:
 with col2:
     st.subheader("Codelist")
     codelist_file = st.file_uploader("Upload CSV", type="csv", key="codelist_file")
-    mo_26_27 = st.button("Use MO Workstreams 26/27")
+
+mo_26_27 = st.button("Use MO Workstreams 26/27")
+mo_25_26 = st.button("Use MO Workstreams 25/26")
 
 # === Toggle for alternative calculation method ===
 st.markdown("### Options")
@@ -26,9 +27,10 @@ if codelist_file:
     codelist_df = pd.read_csv(codelist_file)
 elif mo_26_27:
     codelist_df = pd.read_csv("codelists/mo_workstreams_26_27.csv")
+elif mo_25_26:
+    codelist_df = pd.read_csv("codelists/mo_workstreams_25_26.csv")
 else:
     codelist_df = None
-
 
 # === Run main logic if both inputs are ready ===
 if uploaded_file and codelist_df is not None:
@@ -43,15 +45,16 @@ if uploaded_file and codelist_df is not None:
     )
 
     included_codes = [
-        "84H00", "00P00", "00L00", "01H00",
-        "13T00", "16C00", "99C00", "00N00"
+        "84H00", "00P00", "00L00", "01H00", "13T00", "16C00", "99C00", "00N00"
     ]
     df = df[df["Commissioner/Provider Code"].isin(included_codes)]
 
     all_codes = df["Commissioner/Provider Code"].unique()
     all_categories = list(codelists.keys())
+
     base_grid = pd.MultiIndex.from_product(
-        [all_codes, all_categories], names=["Commissioner/Provider Code", "Category"]
+        [all_codes, all_categories],
+        names=["Commissioner/Provider Code", "Category"]
     ).to_frame(index=False)
 
     # === Custom cost multipliers ===
@@ -74,7 +77,7 @@ if uploaded_file and codelist_df is not None:
         "Physeptone 1mg/ml oral solution sugar free": 8.96,
         "Vagifem 10microgram vaginal tablets": 15.23,
         "Xalatan 50micrograms/ml eye drops": 19.36,
-}
+    }
 
     # === Function to aggregate by category ===
     def aggregate_category(df, bnf_prefixes, label):
@@ -84,10 +87,8 @@ if uploaded_file and codelist_df is not None:
             "Quantity X Items": "sum",
             "Estimated Drug Cost GBP": "sum"
         }).reset_index()
-
         if use_custom_cost and label in cost_multipliers:
             agg["Estimated Drug Cost GBP"] = agg["Items"] * cost_multipliers[label]
-
         agg["Category"] = label
         return agg
 
@@ -108,11 +109,9 @@ if uploaded_file and codelist_df is not None:
     # === Display and download ===
     st.subheader("Output")
     st.dataframe(formatted)
-
     st.download_button(
         "Download CSV",
         complete.to_csv(index=False),
         file_name="aggregated_output.csv",
         mime="text/csv"
     )
-
