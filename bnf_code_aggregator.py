@@ -56,11 +56,25 @@ if uploaded_file and codelist_df is not None:
 
     # === Custom cost multipliers ===
     cost_multipliers = {
-        "Triple Inhalers": 2,
-        "Lidocaine": 3,
-        "Bath Emollients": 4,
-        "Gluten Free": 10,
-    }
+        "SABAs": 3.11,
+        "Triple Inhalers": 36.41,
+        "Gabapentinoids": 3.02,
+        "Opioids": 4.89,
+        "Antibacterials": 5.71,
+        "Vitamin D": 3.06,
+        "PPIs": 1.69,
+        "Bath Emollients": 7.28,
+        "Mesalazine": 41.76,
+        "Lidocaine": 70.99,
+        "Gluten Free": 20.55,
+        "Cosopt 20mg/ml / 5mg/ml eye dps 0.2ml ud preservative free": 33.15,
+        "Dovobet gel": 50.87,
+        "Ganfort 0.3mg/ml / 5mg/ml eye drops": 19.90,
+        "Lumigan 100micrograms/ml eye drops": 16.00,
+        "Physeptone 1mg/ml oral solution sugar free": 8.96,
+        "Vagifem 10microgram vaginal tablets": 15.23,
+        "Xalatan 50micrograms/ml eye drops": 19.36,
+}
 
     # === Function to aggregate by category ===
     def aggregate_category(df, bnf_prefixes, label):
@@ -101,3 +115,4 @@ if uploaded_file and codelist_df is not None:
         file_name="aggregated_output.csv",
         mime="text/csv"
     )
+
