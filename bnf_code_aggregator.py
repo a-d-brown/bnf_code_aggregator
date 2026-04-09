@@ -15,7 +15,7 @@ with col1:
 with col2:
     st.subheader("Codelist")
     codelist_file = st.file_uploader("Upload CSV", type="csv", key="codelist_file")
-    mo_25_26 = st.button("Use MO Workstreams 25/26")
+    mo_26_27 = st.button("Use MO Workstreams 26/27")
 
 # === Toggle for alternative calculation method ===
 st.markdown("### Options")
@@ -24,8 +24,8 @@ use_custom_cost = st.toggle("Apply estimate for special containers")
 # === Decide on codelist source ===
 if codelist_file:
     codelist_df = pd.read_csv(codelist_file)
-elif mo_25_26:
-    codelist_df = pd.read_csv("codelists/mo_workstreams_25_26.csv")
+elif mo_26_27:
+    codelist_df = pd.read_csv("codelists/mo_workstreams_26_27.csv")
 else:
     codelist_df = None
 
